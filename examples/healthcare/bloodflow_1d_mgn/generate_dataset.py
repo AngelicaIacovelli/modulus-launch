@@ -230,6 +230,7 @@ def add_features(graphs):
         "capacitance",
         "resistance2",
         "loading",
+        "dt", 
     ]
 
     edges_features = ["rel_position", "distance", "type"]
@@ -251,8 +252,7 @@ def add_features(graphs):
         )
         add_feature(graph.ndata["type"].repeat(1, 1, ntimes), nodes_features, "type")
         add_feature(graph.ndata["T"].repeat(1, 1, ntimes), nodes_features, "T")
-
-        loading = graph.ndata["loading"]
+        add_feature(graph.ndata["dt"].repeat(1, 1, ntimes), nodes_features, "dt")
 
         p = graph.ndata["pressure"].clone()
         q = graph.ndata["flowrate"].clone()
@@ -275,11 +275,8 @@ def add_features(graphs):
 
         cfeatures = th.cat(cf, axis=1)
 
-        if "loading" in nodes_features:
-            loading = graph.ndata["loading"]
-            graph.ndata["nfeatures"] = th.cat((p, q, cfeatures, loading), axis=1)
-        else:
-            graph.ndata["nfeatures"] = th.cat((p, q, cfeatures), axis=1)
+
+        graph.ndata["nfeatures"] = th.cat((p, q, cfeatures), axis=1)
 
         cf = []
         add_feature(graph.edata["rel_position"], edges_features, "rel_position")

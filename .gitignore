@@ -172,3 +172,7 @@ wandb/
 
 # Sphinx documentation
 docs/_build/
+
+
+
+launch.sh
