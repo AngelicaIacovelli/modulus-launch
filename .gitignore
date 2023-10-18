@@ -176,3 +176,10 @@ docs/_build/
 
 
 launch.sh
+checkpoints*
+gpualloc.sh
+outputs*
+flowrate.png
+pressure.png
+simulation_results*
+train*.out

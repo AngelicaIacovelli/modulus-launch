@@ -100,6 +100,9 @@ class MGNTrainer:
 
         trainset, testset = train_test_split(graphs, cfg.training.train_test_split)
 
+        params["train_split"] = trainset
+        params["test_split"] = testset
+
         train_graphs = [graphs[gname] for gname in trainset]
         traindataset = Bloodflow1DDataset(train_graphs, params, trainset)
 
