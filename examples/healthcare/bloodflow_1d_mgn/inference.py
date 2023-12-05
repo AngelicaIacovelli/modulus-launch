@@ -120,8 +120,9 @@ class Rollout:
 
         if graphs == None:
             norm_type = {"features": "normal", "labels": "normal"}
+
             graphs, _ = generate_normalized_graphs(
-                "raw_dataset/graphs/",
+                "examples/healthcare/bloodflow_1d_mgn/raw_dataset/graphs/",
                 norm_type,
                 cfg.training.geometries,
                 params["statistics"],

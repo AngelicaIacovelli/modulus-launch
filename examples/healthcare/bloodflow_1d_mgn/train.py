@@ -20,6 +20,7 @@ import time, os
 import numpy as np
 import hydra
 
+from inference import evaluate_model
 from modulus.distributed.manager import DistributedManager
 from modulus.models.meshgraphnet import MeshGraphNet
 
@@ -65,9 +66,32 @@ class MGNTrainer:
         logger.info(f"Using {self.device} device")
 
         norm_type = {"features": "normal", "labels": "normal"}
-        graphs, params = generate_normalized_graphs(
-            "raw_dataset/graphs/", norm_type, cfg.training.geometries
-        )
+
+        if cfg.hyperparameter_optimization == "True":
+            
+            vecchia_directory = os.getcwd()
+
+            # Specifica il percorso della nuova directory
+            nuova_directory = "/expanse/lustre/scratch/aiacovelli/temp_project/modulus-launch/examples/healthcare/bloodflow_1d_mgn"
+
+            # Torna indietro nella directory padre
+            os.chdir("..")
+
+            # Cambia la directory di lavoro alla nuova posizione
+            os.chdir(nuova_directory)
+
+            graphs, params = generate_normalized_graphs(
+                "raw_dataset/graphs/", norm_type, cfg.training.geometries
+            )
+
+            #mi rimetto sulla vecchia directory
+            os.chdir(vecchia_directory)
+
+        else:
+            graphs, params = generate_normalized_graphs(
+                "raw_dataset/graphs/", norm_type, cfg.training.geometries
+            )
+
 
         graph = graphs[list(graphs)[0]]
 
@@ -280,6 +304,10 @@ def do_training(cfg: DictConfig):
         with open(cfg.checkpoints.ckpt_path + "/parameters.json", "w") as outf:
             json.dump(trainer.params, outf, indent=4)
     logger.info("Training completed!")
+
+    ep, eq = evaluate_model(cfg, logger, trainer.model, trainer.params, trainer.graphs)
+
+    return (ep + eq) / 2
 
 
 """

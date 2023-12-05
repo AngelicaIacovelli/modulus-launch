@@ -13,20 +13,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+work_directory: "."
+
 scheduler:
-  lr: 1.E-3
-  lr_decay: 1.E-3
+  lr: 1.E-3 # hpo
+  lr_decay: 1.E-3 # hpo
 
 training:
-  batch_size: 100
-  epochs: 100
-  geometries: "healthy"
-  stride: 5
-  rate_noise: 100
-  train_test_split: 0.9
+  batch_size: 100 # hpo
+  epochs: 500 
+  geometries: "healthy" 
+  stride: 5 # hpo
+  rate_noise: 100 # hpo
+  train_test_split: 0.9 
   loss_weight_1st_timestep: 1
-  loss_weight_other_timesteps: 0.5
-  loss_weight_boundary_nodes: 100
+  loss_weight_other_timesteps: 0.5 
+  loss_weight_boundary_nodes: 100 # hpo
+  output_interval: 50
 
 checkpoints:
   ckpt_path: "checkpoints"
@@ -40,8 +43,12 @@ testing:
   graph: "s0090_0001.21.0.grph"
 
 architecture:
-  processor_size: 5
-  hidden_dim_node_encoder: 64
-  hidden_dim_edge_encoder: 64
-  hidden_dim_processor: 64
-  hidden_dim_node_decoder: 64
+  processor_size: 5 # hpo
+  hidden_dim_node_encoder: 64 # hpo
+  hidden_dim_edge_encoder: 64 # hpo
+  hidden_dim_processor: 64 # hpo
+  hidden_dim_node_decoder: 64 # hpo
+
+hyperparameter_optimization:
+  runs: 100
+  flag: "True" # True per quando lanchi hpo, False altrimenti --------------------

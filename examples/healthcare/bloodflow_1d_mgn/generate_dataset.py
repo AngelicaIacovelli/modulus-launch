@@ -563,6 +563,7 @@ def train_test_split(graphs, perc):
 if __name__ == "__main__":
     t_params, args = parse_command_line_arguments()
     norm_type = {"features": "normal", "labels": "normal"}
+    
     graphs, params = generate_normalized_graphs("raw_dataset/graphs/", norm_type)
 
     graph = graphs[list(graphs)[0]]

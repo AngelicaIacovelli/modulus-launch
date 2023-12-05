@@ -321,6 +321,7 @@ The main function reads all vtps files from the folder specified in input_dir
 and generates DGL graphs. The graphs are saved in output_dir.
 """
 if __name__ == "__main__":
+
     input_dir = "raw_dataset/vtps"
     output_dir = "raw_dataset/graphs/"
 
