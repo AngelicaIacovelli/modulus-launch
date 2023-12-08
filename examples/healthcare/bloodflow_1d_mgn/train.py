@@ -67,7 +67,7 @@ class MGNTrainer:
 
         norm_type = {"features": "normal", "labels": "normal"}
 
-        if cfg.hyperparameter_optimization == "True":
+        if cfg.hyperparameter_optimization.flag == "True":
             
             vecchia_directory = os.getcwd()
 
