@@ -83,9 +83,14 @@ class MGNTrainer:
             graphs, params = generate_normalized_graphs(
                 "raw_dataset/graphs/", norm_type, cfg.training.geometries
             )
+            
+            #print("Directory", os.getcwd())
+            #print("grafi", graphs) 
 
-            #mi rimetto sulla vecchia directory
+            #mi rimetto sulla vecchia directoryself.
             os.chdir(vecchia_directory)
+
+            self.graphs = graphs
 
         else:
             graphs, params = generate_normalized_graphs(
@@ -305,7 +310,7 @@ def do_training(cfg: DictConfig):
             json.dump(trainer.params, outf, indent=4)
     logger.info("Training completed!")
 
-    ep, eq = evaluate_model(cfg, logger, trainer.model, trainer.params, trainer.graphs)
+    ep, eq = evaluate_model(cfg, logger, trainer.model, trainer.params, trainer.graphs) 
 
     return (ep + eq) / 2
 
